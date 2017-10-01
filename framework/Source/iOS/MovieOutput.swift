@@ -8,7 +8,8 @@ public protocol AudioEncodingTarget {
 public class MovieOutput: ImageConsumer, AudioEncodingTarget {
     public let sources = SourceContainer()
     public let maximumInputs:UInt = 1
-    
+    public var outputRotation = Rotation.noRotation
+
     let assetWriter:AVAssetWriter
     let assetWriterVideoInput:AVAssetWriterInput
     var assetWriterAudioInput:AVAssetWriterInput?
@@ -167,7 +168,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         renderFramebuffer.activateFramebufferForRendering()
         clearFramebufferWithColor(Color.black)
         CVPixelBufferLockBaseAddress(pixelBuffer, CVPixelBufferLockFlags(rawValue:CVOptionFlags(0)))
-        renderQuadWithShader(colorSwizzlingShader, uniformSettings:ShaderUniformSettings(), vertexBufferObject:sharedImageProcessingContext.standardImageVBO, inputTextures:[framebuffer.texturePropertiesForOutputRotation(.noRotation)])
+        renderQuadWithShader(colorSwizzlingShader, uniformSettings:ShaderUniformSettings(), vertexBufferObject:sharedImageProcessingContext.standardImageVBO, inputTextures:[framebuffer.texturePropertiesForOutputRotation(outputRotation)])
         
         if sharedImageProcessingContext.supportsTextureCaches() {
             glFinish()

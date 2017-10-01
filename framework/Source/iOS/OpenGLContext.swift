@@ -2,7 +2,7 @@ import OpenGLES
 import UIKit
 
 // TODO: Find a way to warn people if they set this after the context has been created
-var imageProcessingShareGroup:EAGLSharegroup? = nil
+public var imageProcessingShareGroup:EAGLSharegroup? = nil
 
 public class OpenGLContext: SerialDispatch {
     lazy var framebufferCache:FramebufferCache = {
